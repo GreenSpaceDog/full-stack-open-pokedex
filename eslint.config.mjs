@@ -8,9 +8,16 @@ export default [
   {
     files: ['**/*.js'],
     languageOptions: {
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: { ...globals.node },
       ecmaVersion: 'latest',
+      parserOptions: {
+        'ecmaFeatures': {
+          'jsx': true
+        },
+        'ecmaVersion': 2018,
+        'sourceType': 'module'
+      },
     },
     plugins: {
       '@stylistic/js': stylisticJs,

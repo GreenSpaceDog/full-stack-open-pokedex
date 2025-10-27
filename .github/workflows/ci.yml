@@ -1,0 +1,19 @@
+name: Render
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Trigger deployment
+    env:
+      deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+    run: |
+      curl "$deploy_url"

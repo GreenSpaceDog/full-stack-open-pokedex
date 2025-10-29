@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ main ]
     types: [opened, synchronize]
+    env:
+      CONDITION: ${{ contains(toJson(github.event.commits.*.message), '#skip') }}
 jobs:
   simple_deployment_pipeline:    
     runs-on: ubuntu-latest    
@@ -20,12 +22,12 @@ jobs:
       - run: npm run build
       - run: npm test
       - name: Trigger deployment
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && env.CONDITION == 'false'}}
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: curl "$deploy_url"
   tag_release:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && env.CONDITION == 'false' }}
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
     steps:  

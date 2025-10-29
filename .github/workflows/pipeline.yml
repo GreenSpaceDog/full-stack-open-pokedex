@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [ main ]
     types: [opened, synchronize]
-    env:
-      CONDITION: ${{ contains(toJson(github.event.commits.*.message), '#skip') }}
+env:
+  CONDITION: ${{ contains(toJson(github.event.commits.*.message), '#skip') }}
 jobs:
   simple_deployment_pipeline:    
     runs-on: ubuntu-latest    

@@ -30,9 +30,9 @@ jobs:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
     steps:  
+        if: ${{ github.event_name == 'push' && env.CONDITION == 'false' }}
       - uses: actions/checkout@v4
-      - name: Bump version and push tag
-        if: ${{ github.event_name == 'push' && env.CONDITION == 'false' }}      
+      - name: Bump version and push tag     
         uses: anothrNick/github-tag-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

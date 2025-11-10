@@ -24,13 +24,15 @@ jobs:
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: curl "$deploy_url"
-      - name: Notify discord
+      - name: Notify discord about success
         uses: rjstone/discord-webhook-notify@v2
         if: success()
         with:
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
             severity: info
             title: A new version of Pokedex deployed to https://full-stack-open-pokedex-rnf1.onrender.com/
+        - name: Notify discord about failure
+        uses: rjstone/discord-webhook-notify@v2
         if: failure()
         with:
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}

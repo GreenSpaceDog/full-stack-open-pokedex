@@ -31,7 +31,7 @@ jobs:
             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
             severity: info
             title: A new version of Pokedex deployed to https://full-stack-open-pokedex-rnf1.onrender.com/
-        - name: Notify discord about failure
+      - name: Notify discord about failure
         uses: rjstone/discord-webhook-notify@v2
         if: failure()
         with:

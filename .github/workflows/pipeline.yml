@@ -37,7 +37,7 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
-          title: commit ${{ toJson(github.event.head_commit.url) }} broke the build
+          title: commit ${{ github.event.head_commit.url }} broke the build
           color: 0xff0000
   tag_release:
     if: ${{ github.event_name == 'push' && contains(toJson(github.event.commits.*.message), '#skip') == 'false' }}   

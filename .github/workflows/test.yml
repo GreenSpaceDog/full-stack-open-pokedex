@@ -13,9 +13,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: github context
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
+          GITHUB_CONTEXT: ${{ toJson(github.event) }}
         run: echo "$GITHUB_CONTEXT"
       - name: commits
         env:
-          COMMITS: ${{ toJson(github.event.commits) }}
+          COMMITS: ${{ toJson(github.event.commits.*.url) }}
         run: echo "$COMMITS"

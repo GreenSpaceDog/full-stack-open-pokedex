@@ -21,5 +21,5 @@ jobs:
         run: echo "$COMMITS"
       - name: test3
         env:
-          COMMITS1: ${{ github.event_name == 'push' && success() && contains(toJson(github.event.commits.*.message), '#skip') == 'false'}}
+          COMMITS1: ${{ github.event_name == 'push' && contains(toJson(github.event.commits.*.message), '#skip') == 'false'}}
         run: echo "$COMMITS1"

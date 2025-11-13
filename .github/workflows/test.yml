@@ -11,11 +11,15 @@ jobs:
     runs-on: ubuntu-latest    
     steps:      
       - uses: actions/checkout@v4
-      - name: github context
+      - name: test1
         env:
-          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+          GITHUB_CONTEXT: ${{ contains(toJson(github.event.commits.*.message), '#skip') }}
         run: echo "$GITHUB_CONTEXT"
-      - name: commits
+      - name: test2
         env:
-          COMMITS: ${{ toJson(github.event.commits.*.url) }}
+          COMMITS: ${{ contains(toJson(github.event.commits.*.message), '#skip') == 'false' }}
         run: echo "$COMMITS"
+      - name: test3
+        env:
+          COMMITS1: ${{ github.event_name == 'push' && success() && contains(toJson(github.event.commits.*.message), '#skip') == 'false'}}
+        run: echo "$COMMITS1"
